@@ -1,0 +1,16 @@
+<section class="img-container">
+  <img src="assets/img/potatoes-login-bg-2.png" srcset="App logo">
+</section>
+<main class="main-container">
+  <h1 class="title">{{ title }}</h1>
+  <form [formGroup]="loginForm" class="form-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre de usuario</mat-label>
+      <input matInput formControlName="username">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password"  formControlName="password">
+    </mat-form-field>
+  </form>
+</main>
