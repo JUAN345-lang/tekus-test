@@ -9,7 +9,7 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnDestroy {
-  public title: string = 'Bienvenido a papas Boyaca'
+  public title: string = 'Patatas Subscribers ToGo'
   public loginForm: FormGroup = new FormGroup({
     userName: new FormControl(''),
     password: new FormControl('')
