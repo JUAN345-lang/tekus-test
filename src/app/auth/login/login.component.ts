@@ -16,7 +16,9 @@ export class LoginComponent implements OnDestroy {
   });
   public onDestroy$ : Subject<void> = new Subject();
 
-  constructor(private readonly loginService: LoginService) {}
+  constructor(private readonly loginService: LoginService
+  ) {}
+
   ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
@@ -24,9 +26,12 @@ export class LoginComponent implements OnDestroy {
 
   public login() {
     const data = this.loginForm.value;
-    this.loginService.login(data)
-    .pipe(takeUntil(this.onDestroy$))
-    .subscribe(({ Token }) => this.loginService.setUserToken(Token)) 
+    this.loginService
+      .login(data)
+      .pipe(
+        takeUntil(this.onDestroy$)
+      )
+      .subscribe(({ Token }) => this.loginService.setUserToken(Token)); 
   }
 
 
