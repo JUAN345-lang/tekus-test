@@ -1,13 +1,29 @@
-<table mat-table [dataSource]="(dataSource$ | async)?.Data ?? []" class="mat-elevation-z8 demo-table">
-  <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-    <th mat-header-cell *matHeaderCellDef>
-      {{column.header}}
-    </th>
-    <td mat-cell *matCellDef="let row">
-      {{column.cell(row)}}
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+<section class="title-container">
+  <h1 class="title">Subscribers</h1>
+  <button class="btn-add">Add new subscriber(s)</button>
+</section>
+<section class="table-container">
+  <table mat-table [dataSource]="(dataSource$ | async)?.Data ?? []" class="mat-elevation-z8 demo-table">
+    <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+      <th mat-header-cell *matHeaderCellDef>
+        {{column.header}}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{column.cell(row)}}
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</section>
+<section class="paginator-container" *ngIf="paginatorOptions$ | async as paginatorOptions">
+  <mat-paginator
+  [showFirstLastButtons]="true"
+  [length]="(dataSource$ | async)?.Count"
+  [pageSizeOptions]="[10, 15, 20]"
+  [pageSize]="paginatorOptions.pageSize"
+  [pageIndex]="paginatorOptions.pageIndex - 1"
+  (page)="handlePageEvent($event)">
+</mat-paginator>
+</section>

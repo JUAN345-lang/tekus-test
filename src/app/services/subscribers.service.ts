@@ -13,8 +13,8 @@ export class SubscribersService {
 
   constructor(private httpClient: HttpClient) {}
 
-  public allSubscribers(): Observable<SubscribersResponse> {
-    return this.httpClient.get<SubscribersResponse>(`${this.baseUrl}/${this.subscribersPath}`)
+  public allSubscribers(page: number = 1, count:number = 10): Observable<SubscribersResponse> {
+    return this.httpClient.get<SubscribersResponse>(`${this.baseUrl}/${this.subscribersPath}?page=${page}&count=${count}`)
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -16,7 +17,9 @@ export class LoginComponent implements OnDestroy {
   });
   public onDestroy$ : Subject<void> = new Subject();
 
-  constructor(private readonly loginService: LoginService
+  constructor(
+    private readonly loginService: LoginService,
+    private readonly router: Router
   ) {}
 
   ngOnDestroy(): void {
@@ -31,7 +34,10 @@ export class LoginComponent implements OnDestroy {
       .pipe(
         takeUntil(this.onDestroy$)
       )
-      .subscribe(({ Token }) => this.loginService.setUserToken(Token)); 
+      .subscribe(({ Token }) => {
+        this.loginService.setUserToken(Token)
+        this.router.navigateByUrl('/subscribers')
+      }); 
   }
 
 

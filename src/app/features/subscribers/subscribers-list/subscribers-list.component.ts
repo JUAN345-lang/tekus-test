@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Subscriber, SubscribersResponse } from 'src/app/models/subscriber.model';
 import { SubscribersService } from 'src/app/services/subscribers.service';
 
@@ -13,6 +13,21 @@ export class SubscribersListComponent implements OnInit, OnDestroy {
     Count: 0,
     Data:[]
   });
+  public paginatorOptions$: BehaviorSubject<{
+    pageSize: number,
+    disabled: boolean,
+    pageIndex: number,
+  }> = new BehaviorSubject<{
+    pageSize: number,
+    disabled: boolean,
+    pageIndex: number,
+  }>(
+    {
+      pageSize: 10,
+      disabled: false,
+      pageIndex: 1,
+    }
+  );
   public onDestroy$ : Subject<void> = new Subject<void>();
   public columns: Array<{
     columnDef: string,
@@ -54,11 +69,24 @@ export class SubscribersListComponent implements OnInit, OnDestroy {
     this.onDestroy$.complete();
   }
   ngOnInit(): void {
-   this.subscribersService.allSubscribers()
-   .pipe(
-    tap((data) => this.dataSource$.next(data)),
-    takeUntil(this.onDestroy$))
-   .subscribe();
+    this.paginatorOptions$
+      .pipe(
+        switchMap(({ pageIndex, pageSize }) =>
+          this.subscribersService.allSubscribers(pageIndex, pageSize).pipe(
+            tap((data) => {
+              this.dataSource$.next(data);
+            })
+          )
+        ),
+        takeUntil(this.onDestroy$)
+      )
+      .subscribe();
+  }
+
+  public handlePageEvent(event:{ pageSize: number, pageIndex: number }): void {
+    const options = this.paginatorOptions$.value;
+    const { pageSize, pageIndex } = event
+    this.paginatorOptions$.next({...options, pageSize, pageIndex: pageIndex + 1 })
   }
 
 }
