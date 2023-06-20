@@ -2,11 +2,10 @@
   display: grid;
   grid-template-columns: 3fr 2fr;
   align-items: center;
-  height: 100%;
+  height: calc(100% - 8.9vh);
 }
 
 .main-container {
-  background-color: rgb(7, 125, 65);
   padding: 0 40px;
   display: flex;
   flex-direction: column;
@@ -25,7 +24,7 @@
   .title {
     text-align: center;
     font-size: 3rem;
-    color: white;
+    color: black;
   }
 
 }
@@ -38,6 +37,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-top-right-radius: 20%;
+  border-bottom-right-radius: 20%;
 
   img {
     height: 35vw;
@@ -76,6 +77,10 @@
 
     .login-btn {
       background-color: black;
+      color: white;
+    }
+
+    .title {
       color: white;
     }
 
