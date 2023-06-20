@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
+import { SubscribersRoutingModule } from './subscribers-routing.module';
+import { MatTableModule } from '@angular/material/table';
+import { SubscribersListComponent } from './subscribers-list/subscribers-list.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SubscribersListComponent,
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    SubscribersRoutingModule,
+    MatTableModule,
   ]
 })
 export class SubscribersModule { }
