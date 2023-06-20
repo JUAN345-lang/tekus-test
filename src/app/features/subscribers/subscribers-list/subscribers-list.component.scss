@@ -31,3 +31,17 @@
   padding: 20px;
   justify-content: flex-end;
 }
+
+.filters-container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  justify-content: flex-end;
+  padding: 20px;
+  flex-wrap: wrap;
+
+  form {
+    display: flex;
+    gap: 20px;
+  }
+}

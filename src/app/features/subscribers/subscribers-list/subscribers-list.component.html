@@ -2,6 +2,25 @@
   <h1 class="title">Subscribers</h1>
   <button class="btn-add">Add new subscriber(s)</button>
 </section>
+
+  <section class="filters-container">
+    <span>Filters by: </span>
+    <form [formGroup]="sortGroupBy">
+      <mat-form-field>
+        <mat-label>Sort Order</mat-label>
+        <mat-select formControlName="sortOrder">
+          <mat-option *ngFor="let filter of filters?.sortType" [value]="filter?.value">{{filter?.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Sort Type</mat-label>
+        <mat-select formControlName="sortOrder">
+          <mat-option *ngFor="let filter of filters?.sortOrder" [value]="filter?.value">{{filter?.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </section>
+  
 <section class="table-container">
   <table mat-table [dataSource]="(dataSource$ | async)?.Data ?? []" class="mat-elevation-z8 demo-table">
     <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
