@@ -23,5 +23,5 @@ export interface Subscriber {
   SubscriptionStateDescription?: string,
   Activity?: string,
   ConnectionState?: number,
-  Id?: number
+  Id: number
 }

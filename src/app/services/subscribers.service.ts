@@ -26,8 +26,13 @@ export class SubscribersService {
     return this.httpClient.post<string>(`${this.baseUrl}/${this.subscribersPath}/`, payload)
   }
 
-  public removeSubscriber(Id: string): Observable<void> {
+  public removeSubscriber(Id: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.baseUrl}/${this.subscribersPath}/${Id}`)
+  }
+
+  public editSubscriber( subscriber: Subscriber): Observable<void> {
+
+    return this.httpClient.put<void>(`${this.baseUrl}/${this.subscribersPath}/${subscriber.Id}`, subscriber)
   }
 
 }

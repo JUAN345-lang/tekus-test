@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subscriber-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.actions-btns {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+
+.btn {
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: fit-content;
+  padding: 10px 15px;
+}
+
+.btn:disabled {
+  background-color: #c1bfbf;
+}

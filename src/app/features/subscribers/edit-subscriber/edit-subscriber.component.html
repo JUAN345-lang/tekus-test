@@ -1,0 +1,37 @@
+<header class="header">
+  <h1>{{ title }} {{ data.Name }}</h1>
+  <mat-icon (click)="close()">clear</mat-icon>
+</header>
+<section  >
+  <form [formGroup]="subscriberForm" class="subscriber-form"> 
+  <mat-form-field appearance="fill">
+    <mat-label>User name</mat-label>
+    <input matInput formControlName="Name">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>User Email</mat-label>
+    <input matInput formControlName="Email">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>User Country Code</mat-label>
+    <input matInput formControlName="CountryCode">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>User Phone Number</mat-label>
+    <input matInput formControlName="PhoneNumber">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>User Job Title</mat-label>
+    <input matInput formControlName="JobTitle">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>User Area</mat-label>
+    <input matInput formControlName="Area">
+  </mat-form-field>
+  <section class="actions-btns">
+   <button
+   [disabled]="!subscriberForm.valid"
+   class="btn" (click)="editSubscriber()">Edit</button>
+  </section>
+</form>
+</section>

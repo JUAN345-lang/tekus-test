@@ -21,6 +21,7 @@ import { AddSubscriberComponent } from '../add-subscriber/add-subscriber.compone
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmPopupComponent } from 'src/app/shared/confirm-popup/confirm-popup.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { EditSubscriberComponent } from '../edit-subscriber/edit-subscriber.component';
 
 @Component({
   selector: 'app-subscribers-list',
@@ -51,6 +52,7 @@ export class SubscribersListComponent implements OnInit, OnDestroy {
     columnDef: string;
     header: string;
     cell: (element: Subscriber) => string;
+    item: (element: Subscriber) => Subscriber
   }> = columnsSubscribers;
 
   displayedColumns = this.columns.map((c) => c.columnDef);
@@ -128,12 +130,25 @@ export class SubscribersListComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  public editSubscriptor(Id: string) {
-    console.log(Id);
+  public editSubscriptor(data: Subscriber) {
+    const editDialog = this.dialogService.open(EditSubscriberComponent, {
+      disableClose: true,
+      width: '700px',
+      data
+    });
+
+    editDialog
+      .afterClosed()
+      .pipe(take(1), filter(Boolean))
+      .subscribe(() => {
+        this.refreshSubscribersData();
+      });
+
   }
 
-  public removeSubscriptor(Id: string) {
+  public removeSubscriptor(subscriber: Subscriber) {
     const confirmDialog = this.dialogService.open(ConfirmPopupComponent, {
+      disableClose: true,
       data: 'Are you sure you want to remove it ?',
     });
 
@@ -141,7 +156,7 @@ export class SubscribersListComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap(() => this.subscribersService.removeSubscriber(Id)),
+        switchMap(() => this.subscribersService.removeSubscriber(subscriber?.Id)),
         tap(() =>
           this.snackService.open('Subscriber removed successfully', 'cerrar')
         ),

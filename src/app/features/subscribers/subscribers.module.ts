@@ -10,11 +10,13 @@ import { AddSubscriberComponent } from './add-subscriber/add-subscriber.componen
 import { DialogModule } from '@angular/cdk/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { EditSubscriberComponent } from './edit-subscriber/edit-subscriber.component';
 
 @NgModule({
   declarations: [
     SubscribersListComponent,
     AddSubscriberComponent,
+    EditSubscriberComponent,
   ],
   imports: [
     CommonModule,

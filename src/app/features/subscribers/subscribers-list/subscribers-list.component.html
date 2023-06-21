@@ -48,12 +48,12 @@
           *ngIf="column.columnDef === 'selectedSubscriber'"
           class="actions-container"
         >
-          <button class="action-btn edit-btn" (click)="editSubscriptor(column.cell(row))">
+          <button class="action-btn edit-btn" (click)="editSubscriptor(column.item(row))">
             Edit
           </button>
           <button
             class="action-btn remove-btn"
-            (click)="removeSubscriptor(column.cell(row))"
+            (click)="removeSubscriptor(column.item(row))"
           >
             Remove
           </button>

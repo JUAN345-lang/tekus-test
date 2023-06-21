@@ -44,7 +44,7 @@ export class AddSubscriberComponent implements OnInit, OnDestroy {
     return new FormGroup({
       Name: new FormControl('', [Validators.required]),
       Email: new FormControl('', [Validators.required, Validators.email]),
-      CountryCode: new FormControl('', [Validators.required, Validators.max(2)]),
+      CountryCode: new FormControl('', [Validators.required, Validators.maxLength(2), Validators.minLength(2)]),
       PhoneNumber: new FormControl('', [Validators.required]),
       JobTitle: new FormControl('', [Validators.required]),
       Area: new FormControl('', [Validators.required]),
