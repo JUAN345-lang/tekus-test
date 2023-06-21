@@ -20,6 +20,17 @@
   }
 }
 
+.btn {
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: fit-content;
+  padding: 10px 15px;
+}
+
 .multiple-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -36,39 +47,26 @@
     font-weight: 700;
   }
 }
-  .subscriber-form {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    gap: 10px;
-    box-shadow: 2px 2px 3px 3px rgb(221, 221, 221);
-    border-radius: 20px;
-  }
 
-
+.subscriber-form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+  box-shadow: 2px 2px 3px 3px rgb(221, 221, 221);
+  border-radius: 20px;
+}
 
 .subscriber-btn-add {
   display: flex;
   justify-content: flex-end;
   padding: 20px 0;
-
-  .btn {
-    background-color: black;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    height: fit-content;
-    padding: 10px 15px;
-  }
-
 }
 
 .actions-btns {
   display: flex;
   justify-content: flex-end;
-  
+
   .btn-delete {
     display: flex;
     align-items: center;
@@ -79,27 +77,35 @@
   }
 }
 
-@media  screen and (min-width: 980px) {
+.send-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn:disabled {
+  background-color: #c1bfbf;
+}
+
+@media screen and (min-width: 980px) {
   .multiple-container {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media  screen and (min-width: 1500px) {
+@media screen and (min-width: 1500px) {
   .multiple-container {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media  screen and (min-width: 2000px) {
+@media screen and (min-width: 2000px) {
   .multiple-container {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@media  screen and (min-width: 2800px) {
+@media screen and (min-width: 2800px) {
   .multiple-container {
     grid-template-columns: repeat(5, 1fr);
   }
 }
-

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environment';
 import { HttpClient } from '@angular/common/http';
-import { SubscribersResponse } from '../models/subscriber.model';
+import { Subscriber, SubscribersResponse } from '../models/subscriber.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,6 +17,13 @@ export class SubscribersService {
     return this.httpClient.get<SubscribersResponse>(
       `${this.baseUrl}/${this.subscribersPath}?page=${page}&count=${count}&sortOrder=${sortOrder}&sortType=${sortType}`
     );
+  }
+
+  public addSubscribers( Subscribers: Subscriber[]): Observable<string> {
+    const payload = {
+      Subscribers
+    }
+    return this.httpClient.post<string>(`${this.baseUrl}/${this.subscribersPath}/`, payload)
   }
 
 }

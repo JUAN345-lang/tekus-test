@@ -45,3 +45,9 @@
     </section>
   </form>
 </main>
+<section class="send-container">
+  <button
+  [title]="'Fill all the subscribers information'"
+  [disabled]="!subscribersForm.valid"
+  class="btn" (click)="addMultipleSubscribers()">Send Subscribers</button>
+</section>

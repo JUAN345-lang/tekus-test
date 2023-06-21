@@ -3,7 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import {
   BehaviorSubject,
   Subject,
+  filter,
   switchMap,
+  take,
   takeUntil,
   tap,
 } from 'rxjs';
@@ -89,10 +91,27 @@ export class SubscribersListComponent implements OnInit, OnDestroy {
   }
 
   public addNewSubscriber() {
-    this.dialogService.open(AddSubscriberComponent, {
+    const addSubscriberDialog = this.dialogService.open(AddSubscriberComponent, {
       width: '80vw',
       height: '80vh',
       disableClose: true,
+    })
+
+    addSubscriberDialog
+    .afterClosed()
+    .pipe(
+      take(1),
+      filter(Boolean))
+    .subscribe(() => {
+      const { pageIndex, pageSize, sortOrder, sortType } = this.paginatorOptions$.value;
+      this.subscribersService
+      .allSubscribers(pageIndex, pageSize, sortOrder, sortType)
+      .pipe(
+        tap((data) => {
+          this.dataSource$.next(data);
+        }),
+        take(1)
+      ).subscribe()
     })
   }
 }

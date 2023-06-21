@@ -36,7 +36,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       finalize(() => this.loadingService.hide()),
       catchError((err: HttpErrorResponse) => {
         const { message } = err;
-        this._snackBar.open(message, 'Cerrar')
+        this._snackBar.open(message, 'Close')
 
         if (err.status === 401) {
           this.router.navigateByUrl('/login');
