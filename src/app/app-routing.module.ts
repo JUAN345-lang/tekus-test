@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'subscribers',
     loadChildren: () => import('./features/subscribers/subscribers.module').then(s => s.SubscribersModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
   }
 ];
 
