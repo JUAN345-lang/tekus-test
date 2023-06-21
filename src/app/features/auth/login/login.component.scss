@@ -3,6 +3,11 @@
   grid-template-columns: 3fr 2fr;
   align-items: center;
   height:  calc(100vh - 70px);
+
+  
+::ng-deep .mat-mdc-text-field-wrapper {
+    background: #E8F0FE !important;
+  }
 }
 
 .main-container {
@@ -45,7 +50,6 @@
   }
 }
 
-
 .login-btn {
   padding: 20px;
   background-color: black;
@@ -55,6 +59,7 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
 
 @media  screen and (max-width: 800px) {
   :host {
