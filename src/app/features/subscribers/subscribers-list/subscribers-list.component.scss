@@ -15,7 +15,7 @@
   padding: 20px;
 }
 
-.btn-add {
+.btn {
   background-color: black;
   color: white;
   font-size: 16px;
@@ -43,5 +43,6 @@
   form {
     display: flex;
     gap: 20px;
+    align-items: center;
   }
 }

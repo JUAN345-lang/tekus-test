@@ -1,0 +1,47 @@
+<header class="header">
+  <h1>{{ title }}</h1>
+  <mat-icon (click)="close()">clear</mat-icon>
+</header>
+<section class="subscriber-btn-add">
+  <button class="btn" (click)="addSubscriberItem()">Add Subscriber</button>
+</section>
+<main>
+  <form [formGroup]="subscribersForm">
+    <section formArrayName="subscribersList" class="multiple-container">
+      <div *ngFor="let subscriber of subscribers.controls; let i = index" class="subscriber-form-container">
+        <label>Subscriber {{ i + 1 }}</label>
+        <section [formGroupName]="i" class="subscriber-form">
+          <mat-form-field appearance="fill">
+            <mat-label>User name</mat-label>
+            <input matInput formControlName="Name">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>User Email</mat-label>
+            <input matInput formControlName="Email">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>User Country Code</mat-label>
+            <input matInput formControlName="CountryCode">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>User Phone Number</mat-label>
+            <input matInput formControlName="PhoneNumber">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>User Job Title</mat-label>
+            <input matInput formControlName="JobTitle">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>User Area</mat-label>
+            <input matInput formControlName="Area">
+          </mat-form-field>
+          <section class="actions-btns">
+            <div class="btn-delete" (click)="removeSubscriber(i)">
+              <mat-icon>delete</mat-icon>
+            </div>
+          </section>
+        </section>
+      </div>
+    </section>
+  </form>
+</main>

@@ -1,6 +1,6 @@
 <section class="title-container">
   <h1 class="title">Subscribers</h1>
-  <button class="btn-add">Add new subscriber(s)</button>
+  <button class="btn" (click)="addNewSubscriber()">Add new subscriber</button>
 </section>
 
   <section class="filters-container">
@@ -14,10 +14,11 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Sort Type</mat-label>
-        <mat-select formControlName="sortOrder">
+        <mat-select formControlName="sortType">
           <mat-option *ngFor="let filter of filters?.sortOrder" [value]="filter?.value">{{filter?.label}}</mat-option>
         </mat-select>
       </mat-form-field>
+      <button class="btn" (click)="applyFilters()">Apply filters</button>
     </form>
   </section>
   

@@ -5,16 +5,8 @@ export const sortFilters = {
       value: 'Area',
     },
     {
-      label: 'PublicId',
-      value: 'Public Id',
-    },
-    {
-      label: 'Country Code',
-      value: 'CountryCode',
-    },
-    {
-      label: 'Country Name',
-      value: 'CountryName',
+      label: 'Public Id',
+      value: 'PublicId',
     },
     {
       label: 'Name',
@@ -23,30 +15,6 @@ export const sortFilters = {
     {
       label: 'Email',
       value: 'Email',
-    },
-    {
-      label: 'Job Title',
-      value: 'JobTitle',
-    },
-    {
-      label: 'Phone Number',
-      value: 'PhoneNumber',
-    },
-    {
-      label: 'Phone Code',
-      value: 'PhoneCode',
-    },
-    {
-      label: 'Phone Code And Number',
-      value: 'PhoneCodeAndNumber',
-    },
-    {
-      label: 'Subscription State Description',
-      value: 'SubscriptionStateDescription',
-    },
-    {
-      label: 'Connection State',
-      value: 'ConnectionState',
     },
   ],
   sortOrder: [

@@ -6,10 +6,15 @@ import { SubscribersListComponent } from './subscribers-list/subscribers-list.co
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AddSubscriberComponent } from './add-subscriber/add-subscriber.component';
+import { DialogModule } from '@angular/cdk/dialog';
+import {MatIconModule} from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
     SubscribersListComponent,
+    AddSubscriberComponent,
   ],
   imports: [
     CommonModule,
@@ -18,6 +23,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     MatPaginatorModule,
     ReactiveFormsModule,
+    DialogModule,
+    MatIconModule,
+    MatInputModule,
   ]
 })
 export class SubscribersModule { }

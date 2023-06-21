@@ -1,76 +1,57 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { BehaviorSubject, Observable, Subject, switchMap, takeUntil, tap } from 'rxjs';
-import { Subscriber, SubscribersResponse } from 'src/app/models/subscriber.model';
+import {
+  BehaviorSubject,
+  Subject,
+  switchMap,
+  takeUntil,
+  tap,
+} from 'rxjs';
+import {
+  Subscriber,
+  SubscribersResponse,
+} from 'src/app/models/subscriber.model';
 import { SubscribersService } from 'src/app/services/subscribers.service';
 import { sortFilters } from '../sort-items';
+import { columnsSubscribers } from '../subscribers-table-columns';
+import { SubscriberPaginator } from 'src/app/models/subscribers-paginator.model';
+import { AddSubscriberComponent } from '../add-subscriber/add-subscriber.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-subscribers-list',
   templateUrl: './subscribers-list.component.html',
-  styleUrls: ['./subscribers-list.component.scss']
+  styleUrls: ['./subscribers-list.component.scss'],
 })
 export class SubscribersListComponent implements OnInit, OnDestroy {
-  public dataSource$: BehaviorSubject<SubscribersResponse> = new BehaviorSubject<SubscribersResponse>({
-    Count: 0,
-    Data:[]
-  });
+  public dataSource$: BehaviorSubject<SubscribersResponse> =
+    new BehaviorSubject<SubscribersResponse>({
+      Count: 0,
+      Data: [],
+    });
   public sortGroupBy: FormGroup = new FormGroup({
-    sortOrder: new FormControl(''),
-    sortType: new FormControl(''),
+    sortOrder: new FormControl('Area'),
+    sortType: new FormControl(0),
   });
   public filters = sortFilters;
-  public paginatorOptions$: BehaviorSubject<{
-    pageSize: number,
-    disabled: boolean,
-    pageIndex: number,
-  }> = new BehaviorSubject<{
-    pageSize: number,
-    disabled: boolean,
-    pageIndex: number,
-  }>(
-    {
+  public paginatorOptions$: BehaviorSubject<SubscriberPaginator> =
+    new BehaviorSubject<SubscriberPaginator>({
       pageSize: 10,
       disabled: false,
       pageIndex: 1,
-    }
-  );
-  public onDestroy$ : Subject<void> = new Subject<void>();
+      sortOrder: 'Area',
+      sortType: 0,
+    });
+  public onDestroy$: Subject<void> = new Subject<void>();
   public columns: Array<{
-    columnDef: string,
-    header: string,
-    cell:(element: Subscriber) => string,
-  }> = [{
-    columnDef: 'Area',
-    header: 'Area',
-    cell: (element: Subscriber) => `${element.Area}`
-  },
-  {
-    columnDef: 'Name',
-    header: 'Name',
-    cell: (element: Subscriber) => `${element.Name}`
-  },
-  {
-    columnDef: 'Email',
-    header: 'Email',
-    cell: (element: Subscriber) => `${element.Email}`
-  }, {
-    columnDef: 'JobTitle',
-    header: 'Job Title',
-    cell: (element: Subscriber) => `${element.JobTitle}`
-  },{
-    columnDef: 'PhoneCodeAndNumber',
-    header: 'Phone Number',
-    cell: (element: Subscriber) => `${element.PhoneCodeAndNumber}`
-  },{
-    columnDef: 'SubscriptionStateDescription',
-    header: 'Subscription State',
-    cell: (element: Subscriber) => `${element.SubscriptionStateDescription}`
-  }];
+    columnDef: string;
+    header: string;
+    cell: (element: Subscriber) => string;
+  }> = columnsSubscribers;
 
-  displayedColumns = this.columns.map(c => c.columnDef);
+  displayedColumns = this.columns.map((c) => c.columnDef);
 
-  constructor(private subscribersService: SubscribersService) {}
+  constructor(private subscribersService: SubscribersService, private readonly dialogService: MatDialog) {}
   ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
@@ -78,30 +59,40 @@ export class SubscribersListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.paginatorOptions$
       .pipe(
-        switchMap(({ pageIndex, pageSize }) =>
-          this.subscribersService.allSubscribers(pageIndex, pageSize).pipe(
-            tap((data) => {
-              this.dataSource$.next(data);
-            })
-          )
+        switchMap(({ pageIndex, pageSize, sortOrder, sortType }) =>
+          this.subscribersService
+            .allSubscribers(pageIndex, pageSize, sortOrder, sortType)
+            .pipe(
+              tap((data) => {
+                this.dataSource$.next(data);
+              })
+            )
         ),
         takeUntil(this.onDestroy$)
       )
       .subscribe();
   }
 
-  public handlePageEvent(event:{ pageSize: number, pageIndex: number }): void {
+  public handlePageEvent(event: { pageSize: number; pageIndex: number }): void {
     const options = this.paginatorOptions$.value;
-    const { pageSize, pageIndex } = event
-    this.paginatorOptions$.next({...options, pageSize, pageIndex: pageIndex + 1 })
+    const { pageSize, pageIndex } = event;
+    this.paginatorOptions$.next({
+      ...options,
+      pageSize,
+      pageIndex: pageIndex + 1,
+    });
   }
 
-  public changePropertyToValue(property: string) : string {
-    return (property || '')
-    .replace(/([A-Z]+)/g, ",$1")
-    .replace(/^,/, "")
-    .split(',')
-    .join(' ');
+  public applyFilters(): void {
+    const options = this.paginatorOptions$.value;
+    this.paginatorOptions$.next({ ...options, ...this.sortGroupBy.value });
   }
 
+  public addNewSubscriber() {
+    this.dialogService.open(AddSubscriberComponent, {
+      width: '80vw',
+      height: '80vh',
+      disableClose: true,
+    })
+  }
 }
