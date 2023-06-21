@@ -3,47 +3,82 @@
   <button class="btn" (click)="addNewSubscriber()">Add new subscriber</button>
 </section>
 
-  <section class="filters-container">
-    <span>Filters by: </span>
-    <form [formGroup]="sortGroupBy">
-      <mat-form-field>
-        <mat-label>Sort Order</mat-label>
-        <mat-select formControlName="sortOrder">
-          <mat-option *ngFor="let filter of filters?.sortType" [value]="filter?.value">{{filter?.label}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Sort Type</mat-label>
-        <mat-select formControlName="sortType">
-          <mat-option *ngFor="let filter of filters?.sortOrder" [value]="filter?.value">{{filter?.label}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button class="btn" (click)="applyFilters()">Apply filters</button>
-    </form>
-  </section>
-  
+<section class="filters-container">
+  <span>Filters by: </span>
+  <form [formGroup]="sortGroupBy">
+    <mat-form-field>
+      <mat-label>Sort Order</mat-label>
+      <mat-select formControlName="sortOrder">
+        <mat-option
+          *ngFor="let filter of filters?.sortType"
+          [value]="filter?.value"
+          >{{ filter?.label }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Sort Type</mat-label>
+      <mat-select formControlName="sortType">
+        <mat-option
+          *ngFor="let filter of filters?.sortOrder"
+          [value]="filter?.value"
+          >{{ filter?.label }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <button class="btn" (click)="applyFilters()">Apply filters</button>
+  </form>
+</section>
+
 <section class="table-container">
-  <table mat-table [dataSource]="(dataSource$ | async)?.Data ?? []" class="mat-elevation-z8 demo-table">
-    <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+  <table
+    mat-table
+    [dataSource]="(dataSource$ | async)?.Data ?? []"
+    class="mat-elevation-z8 demo-table"
+  >
+    <ng-container
+      *ngFor="let column of columns"
+      [matColumnDef]="column.columnDef"
+    >
       <th mat-header-cell *matHeaderCellDef>
-        {{column.header}}
+        {{ column.header }}
       </th>
       <td mat-cell *matCellDef="let row">
-        {{column.cell(row)}}
+        <span
+          *ngIf="column.columnDef === 'selectedSubscriber'"
+          class="actions-container"
+        >
+          <button class="action-btn edit-btn" (click)="editSubscriptor(column.cell(row))">
+            Edit
+          </button>
+          <button
+            class="action-btn remove-btn"
+            (click)="removeSubscriptor(column.cell(row))"
+          >
+            Remove
+          </button>
+        </span>
+        <span *ngIf="column.columnDef !== 'selectedSubscriber'">
+          {{ column.cell(row) }}
+        </span>
       </td>
     </ng-container>
-  
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </section>
-<section class="paginator-container" *ngIf="paginatorOptions$ | async as paginatorOptions">
+<section
+  class="paginator-container"
+  *ngIf="paginatorOptions$ | async as paginatorOptions"
+>
   <mat-paginator
-  [showFirstLastButtons]="true"
-  [length]="(dataSource$ | async)?.Count"
-  [pageSizeOptions]="[10, 15, 20]"
-  [pageSize]="paginatorOptions.pageSize"
-  [pageIndex]="paginatorOptions.pageIndex - 1"
-  (page)="handlePageEvent($event)">
-</mat-paginator>
+    [showFirstLastButtons]="true"
+    [length]="(dataSource$ | async)?.Count"
+    [pageSizeOptions]="[10, 15, 20]"
+    [pageSize]="paginatorOptions.pageSize"
+    [pageIndex]="paginatorOptions.pageIndex - 1"
+    (page)="handlePageEvent($event)"
+  >
+  </mat-paginator>
 </section>

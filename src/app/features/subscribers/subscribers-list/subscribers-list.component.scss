@@ -46,3 +46,26 @@
     align-items: center;
   }
 }
+
+.actions-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  .action-btn {
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+  } 
+
+  .edit-btn {
+    background-color: yellowgreen;
+  }
+
+  .remove-btn {
+    background-color: rgb(223, 35, 35);
+    color: white;
+  }
+}

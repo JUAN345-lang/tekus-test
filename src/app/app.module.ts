@@ -10,11 +10,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HeaderComponent } from './features/header/header.component';
+import { ConfirmPopupComponent } from './shared/confirm-popup/confirm-popup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    ConfirmPopupComponent,
   ],
   imports: [
     BrowserModule,

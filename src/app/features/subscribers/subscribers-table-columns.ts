@@ -35,4 +35,9 @@ export const columnsSubscribers: Array<{
     header: 'Subscription State',
     cell: (element: Subscriber) => `${element.SubscriptionStateDescription}`,
   },
+  {
+    columnDef: 'selectedSubscriber',
+    header: 'Actions',
+    cell: (element: Subscriber) => `${element.Id}`
+  }
 ];

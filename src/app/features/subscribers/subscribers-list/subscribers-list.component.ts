@@ -19,6 +19,8 @@ import { columnsSubscribers } from '../subscribers-table-columns';
 import { SubscriberPaginator } from 'src/app/models/subscribers-paginator.model';
 import { AddSubscriberComponent } from '../add-subscriber/add-subscriber.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmPopupComponent } from 'src/app/shared/confirm-popup/confirm-popup.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-subscribers-list',
@@ -53,7 +55,11 @@ export class SubscribersListComponent implements OnInit, OnDestroy {
 
   displayedColumns = this.columns.map((c) => c.columnDef);
 
-  constructor(private subscribersService: SubscribersService, private readonly dialogService: MatDialog) {}
+  constructor(
+    private subscribersService: SubscribersService,
+    private readonly dialogService: MatDialog,
+    private readonly snackService: MatSnackBar
+  ) {}
   ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
@@ -91,27 +97,56 @@ export class SubscribersListComponent implements OnInit, OnDestroy {
   }
 
   public addNewSubscriber() {
-    const addSubscriberDialog = this.dialogService.open(AddSubscriberComponent, {
-      width: '80vw',
-      height: '80vh',
-      disableClose: true,
-    })
+    const addSubscriberDialog = this.dialogService.open(
+      AddSubscriberComponent,
+      {
+        width: '80vw',
+        height: '80vh',
+        disableClose: true,
+      }
+    );
 
     addSubscriberDialog
-    .afterClosed()
-    .pipe(
-      take(1),
-      filter(Boolean))
-    .subscribe(() => {
-      const { pageIndex, pageSize, sortOrder, sortType } = this.paginatorOptions$.value;
-      this.subscribersService
+      .afterClosed()
+      .pipe(take(1), filter(Boolean))
+      .subscribe(() => {
+        this.refreshSubscribersData();
+      });
+  }
+
+  public refreshSubscribersData() {
+    const { pageIndex, pageSize, sortOrder, sortType } =
+      this.paginatorOptions$.value;
+    this.subscribersService
       .allSubscribers(pageIndex, pageSize, sortOrder, sortType)
       .pipe(
         tap((data) => {
           this.dataSource$.next(data);
         }),
         take(1)
-      ).subscribe()
-    })
+      )
+      .subscribe();
+  }
+
+  public editSubscriptor(Id: string) {
+    console.log(Id);
+  }
+
+  public removeSubscriptor(Id: string) {
+    const confirmDialog = this.dialogService.open(ConfirmPopupComponent, {
+      data: 'Are you sure you want to remove it ?',
+    });
+
+    confirmDialog
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        switchMap(() => this.subscribersService.removeSubscriber(Id)),
+        tap(() =>
+          this.snackService.open('Subscriber removed successfully', 'cerrar')
+        ),
+        take(1)
+      )
+      .subscribe(() => this.refreshSubscribersData());
   }
 }
